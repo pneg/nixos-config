@@ -1,0 +1,8 @@
+[Unit]
+Description="Deletes vim undofiles every 30 days"
+Requires=deleteundofiles.timer
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/find %h/.vim/undo-dir -type f -mtime +30 -delete
+User=user

@@ -1,0 +1,9 @@
+[Unit]
+Description="Timer for deleteundofiles.service"
+
+[Timer]
+Unit=deleteundofiles.service
+OnUnitActiveSec=1day
+
+[Install]
+WantedBy=timers.target
