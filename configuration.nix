@@ -8,6 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./modules/nix-ld.nix
+      #./modules/sway.nix
+      ./modules/niri.nix
     ];
 
   # Bootloader
@@ -114,8 +116,7 @@
     gcc.man
     gcc.info
 
-    # gui basics
-    ly
+    # basic gui
     sway
 
     # custom
@@ -151,7 +152,13 @@
   hardware.bluetooth.enable = true;
   security.polkit.enable = true;
   security.pam.services.swaylock = {};
-  programs.sway.enable = true;
+  security.pam.services.gtklock = {};
+
+  services.displayManager.ly.enable = true;
+  services.displayManager.ly.settings = {
+    animation = "matrix";
+  };
+
 
   programs.kdeconnect = {
     enable = true;
@@ -200,11 +207,6 @@
 
   # List services that you want to enable:
   # Display manager
-  services.displayManager.ly.enable = true;
-  services.displayManager.ly.settings = {
-    animation = "matrix";
-  };
-
   # GVFS
   services.gvfs.enable = true;
 

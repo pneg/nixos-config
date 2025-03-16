@@ -10,10 +10,10 @@
     systemdTargets = [ "sway-session.target" ];
   };
   # doesn't work with ly, so we have to make our own service
-  systemd.user.services.foot = {
-    Install.WantedBy = [ "sway-session.target" ];
-    Service.ExecStart = "${pkgs.foot}/bin/foot --server";
-  };
+  #systemd.user.services.foot = {
+  #  Install.WantedBy = [ "sway-session.target" ];
+  #  Service.ExecStart = "${pkgs.foot}/bin/foot --server";
+  #};
   systemd.user.services.mako = {
     Install.WantedBy = [ "sway-session.target" ];
     Service.ExecStart = "${pkgs.mako}/bin/mako";

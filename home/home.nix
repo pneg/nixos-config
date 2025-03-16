@@ -63,9 +63,18 @@
     ripgrep
     fd
     bat
+    nasm
+    figlet
     zsh
     libqalculate
     nix-index
+
+
+    # TEMPORARY PLEASE DELETE
+    waylock
+    wlock
+    gtklock
+    #cthulock
 
     # Audio
     pipewire
@@ -99,7 +108,7 @@
     #brave
     #firefox
     #librewolf
-    #mullvad-browser
+    mullvad-browser
     tor-browser
 
     # Email
