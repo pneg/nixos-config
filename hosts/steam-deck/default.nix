@@ -16,6 +16,7 @@
   jovian.devices.steamdeck = {
     enable = true;
     enableOsFanControl = true;
+    enableSoundSupport = false;
   };
   jovian.hardware.has.amd.gpu = true;
   jovian.steamos = {
@@ -23,6 +24,13 @@
     enableBluetoothConfig = true;
     enableDefaultCmdlineConfig = true;
     enableEarlyOOM = true;
+  };
+
+  services.pipewire.jack.enable = true;
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    alsa.enable = true;
   };
 
   # Tablet
