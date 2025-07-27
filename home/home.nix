@@ -85,6 +85,8 @@
     nerd-fonts.jetbrains-mono
     noto-fonts
     terminus_font
+    dina-font
+    #tamsyn
     font-awesome
 
     # GUI Applications
@@ -185,25 +187,21 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-    ".vimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/dotfiles/.vimrc";
-    ".tmux.conf".source = dotfiles/.tmux.conf;
-    ".config/doom/config.el".source = dotfiles/.config/doom/config.el;
-    ".config/doom/init.el".source = dotfiles/.config/doom/init.el;
-    ".config/doom/packages.el".source = dotfiles/.config/doom/packages.el;
-    ".config/foot/foot.ini".source = dotfiles/.config/foot/foot.ini;
+    ".vimrc".source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/home/dotfiles/vim/.vimrc";
+    ".tmux.conf".source = dotfiles/tmux/.tmux.conf;
+    ".config/doom/config.el".source = dotfiles/doom/config.el;
+    ".config/doom/init.el".source = dotfiles/doom/init.el;
+    ".config/doom/packages.el".source = dotfiles/doom/packages.el;
+    ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
     #".config/mako/config".source = dotfiles/.config/mako/config;
-    ".config/sway/config".source = dotfiles/.config/sway/config;
-    ".config/sway/config.d/swaysome.conf".source = dotfiles/.config/sway/config.d/swaysome.conf;
-    ".config/sway/backgrounds/special.png".source = dotfiles/.config/sway/backgrounds/special.png;
-    ".config/sway/backgrounds/normal.png".source = dotfiles/.config/sway/backgrounds/normal.png;
-    ".config/sway/backgrounds/city.png".source = dotfiles/.config/sway/backgrounds/city.png;
-    ".config/sway/backgrounds/lockscreen.png".source = dotfiles/.config/sway/backgrounds/lockscreen.png;
-    ".config/waybar/config".source = dotfiles/.config/waybar/config;
-    ".config/waybar/style.css".source = dotfiles/.config/waybar/style.css;
+    ".config/sway/config".source = dotfiles/sway/config;
+    ".config/sway/config.d/swaysome.conf".source = dotfiles/sway/config.d/swaysome.conf;
+    #".config/sway/backgrounds/special.png".source = dotfiles/sway/backgrounds/special.png;
+    #".config/sway/backgrounds/normal.png".source = dotfiles/sway/backgrounds/normal.png;
+    #".config/sway/backgrounds/city.png".source = dotfiles/sway/backgrounds/city.png;
+    #".config/sway/backgrounds/lockscreen.png".source = dotfiles/sway/backgrounds/lockscreen.png;
+    ".config/waybar/config".source = dotfiles/waybar/config;
+    ".config/waybar/style.css".source = dotfiles/waybar/style.css;
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''

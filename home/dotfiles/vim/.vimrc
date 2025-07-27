@@ -8,6 +8,8 @@ call plug#begin()
 " ---- General Plugins -----------------------------------
 "Plug 'morhetz/gruvbox'
 Plug 'lifepillar/gruvbox8'
+"Plug 'chriskempson/base16-vim'
+"Plug 'chasinglogic/modus-themes-vim'
 Plug 'itchyny/lightline.vim'
 "Plug 'lambdalisue/vim-fern'
 Plug 'tpope/vim-vinegar'
@@ -30,6 +32,7 @@ Plug 'tpope/vim-surround'
 Plug 'yms9654/HTML-AutoCloseTag', { 'commit': '9e5acea749bde5818ba5782270ed7fda79dd03c3', 'for': ['html', 'javascript']}
 Plug 'kovisoft/slimv', { 'for': [ 'scheme', 'cl', 'lisp', 'clojure' ] }
 "Plug 'jpalardy/vim-slime'
+Plug 'editorconfig/editorconfig-vim'
 
 " ---- Git -------------------------------
 Plug 'airblade/vim-gitgutter'
@@ -41,6 +44,7 @@ Plug 'junegunn/goyo.vim', { 'for': ['text', 'markdown', 'org'] }
 Plug 'junegunn/limelight.vim', { 'for': ['text', 'markdown', 'org'] }
 
 " ---- Extras ----------------------------
+Plug 'markonm/traces.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jasonccox/vim-wayland-clipboard'
 Plug 'ntpeters/vim-better-whitespace'
@@ -77,7 +81,6 @@ let mapleader = " "
 
 " We need this for plugins like lsp and vim-gitgutter
 " which put symbols in the signcolumn
-hi clear SignColumn
 set signcolumn=yes
 
 " allow Ctrl-[ without timeout
@@ -221,14 +224,17 @@ command DisableSpellCheck set nospell
 set background=dark
 
 " italics (must be before colorscheme)
-let g:gruvbox_italics=0
-let g:gruvbox_italicize_strings=0
+let g:gruvbox_italics=1
+let g:gruvbox_italicize_strings=1
 
 " Highlight groups for various languages
 let g:gruvbox_filetype_hi_groups=1
 
 " Set the colorscheme
 colorscheme gruvbox8
+
+" line numbers
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
 
 " ---- Plugin-Specific Settings -------------------------
@@ -266,6 +272,19 @@ let g:lightline = {
       \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
+
+" make the same color as colorscheme.
+" autocmd VimEnter * call SetupLightlineColors()
+" function SetupLightlineColors() abort
+"   " transparent background in statusbar
+"   let l:palette = lightline#palette()
+
+"   let l:palette.normal.middle = [ [ 'NONE', 'NONE', 'NONE', 'NONE' ] ]
+"   let l:palette.inactive.middle = l:palette.normal.middle
+"   let l:palette.tabline.middle = l:palette.normal.middle
+
+"   call lightline#colorscheme()
+" endfunction
 
 " ---- yegappan/lsp settings ----
 let lspOpts = #{autoHighlightDiags: v:true}
@@ -305,6 +324,16 @@ let lspServers = [#{
       \	      }
       \	    }
       \	  }
+      \	}, #{
+      \	  name: 'pyright',
+      \   filetype: 'python',
+      \   path: $HOME.'/.nix-profile/bin/pyright-langserver',
+      \   workspaceConfig: #{
+      \     python: #{
+      \       pythonPath: $HOME.'/.nix-profile/bin/python'
+      \     }
+      \   },
+      \   args: ['--stdio'],
       \	}]
 autocmd User LspSetup call LspAddServer(lspServers)
 
@@ -333,6 +362,7 @@ set shortmess+=c
 
 " ---- girishji/scope.vim settings ----
 nnoremap <Leader>p :call g:scope#fuzzy#File()<cr>
+" nnoremap <Leader>p <scriptcmd>vim9cmd scope#fuzzy#File()<cr>
 
 " ---- girishji/devdocs.vim settings ----
 nnoremap <Leader>d :DevdocsFind<CR>
