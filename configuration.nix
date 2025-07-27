@@ -6,7 +6,7 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./modules/nix-ld.nix
       #./modules/sway.nix
       ./modules/niri.nix
@@ -71,6 +71,8 @@
   users.users.nixosvmtest.group = "nixosvmtest";
   users.groups.nixosvmtest = {};
 
+  # system.copySystemConfiguration = true;
+
   # Automatic garbage collection
   nix.gc.automatic = true;
   nix.gc.dates = "03:15"; # Optional; allows customizing optimisation schedule
@@ -100,6 +102,7 @@
     python3Full
     pciutils
     gnupg
+    file
     usql
 
     # build tools
@@ -124,6 +127,7 @@
     wireguard-tools
     polychromatic
     opensd
+    nautilus
 
     (pkgs.writeShellScriptBin "toggle-bt-radio" ''
       #!/bin/bash
@@ -145,6 +149,11 @@
         nmcli radio all off
       fi
     '')
+
+    #(pkgs.writeShellScriptBin "flatpak" ''
+    #  #!/bin/bash
+    #  vopono exec --protocol Wireguard --provider Mullvad --server netherlands --interface enp4s0f3u1u4c2 "flatpak $*"
+    #'')
   ];
 
   # user configuration
@@ -153,6 +162,8 @@
   security.polkit.enable = true;
   security.pam.services.swaylock = {};
   security.pam.services.gtklock = {};
+
+  programs.obs-studio.enableVirtualCamera = true;
 
   services.displayManager.ly.enable = true;
   services.displayManager.ly.settings = {
@@ -165,6 +176,12 @@
     package = pkgs.valent;
   };
 
+  programs.nautilus-open-any-terminal = {
+    enable = true;
+    terminal = "foot";
+  };
+  services.gnome.sushi.enable = true;
+
   programs.bash.promptInit = ''
     if [ "$TERM" != "dumb" ] || [ -n "$INSIDE_EMACS" ]; then
       PROMPT_COLOR="1;31m"
@@ -175,6 +192,7 @@
 
   # Printing
   services.printing = {
+    # configure at https://localhost:631/
     enable = true;
     drivers = [ pkgs.foomatic-db-ppds ];
   };
@@ -220,6 +238,12 @@
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     '';
   };
+
+  # vopono
+  #security.sudo.extraRules = [
+  #  { groups = [ "wheel" ];
+  #    commands = [ { command = "/run/current-system/sw/bin/vopono"; options = [ "NOPASSWD" "SETENV" ]; } ]; }
+  #];
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

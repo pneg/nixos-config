@@ -60,15 +60,17 @@
 
     # Tools
     xorg.xeyes
+    fzf
     ripgrep
     fd
+    hyperfine
     bat
     nasm
     figlet
     zsh
     libqalculate
     nix-index
-
+    quickemu
 
     # TEMPORARY PLEASE DELETE
     waylock
@@ -95,6 +97,10 @@
     krita
     valent
     libreoffice-fresh
+    anki
+    nicotine-plus
+    qbittorrent
+    tagger
 
     # Flatpak
     flatpak
@@ -126,10 +132,12 @@
     alpaca
 
     # Development
+
     # Languages
     lua5_4
     mitschemeX11
     sbcl
+    python313
 
     # libs
     love
@@ -140,12 +148,17 @@
     jdt-language-server
     nil
     lua-language-server
+    pyright
 
     # IDEs
     vim-full
     racket
     emacs-gtk
+    neovim
     #jetbrains.rider
+
+    # Games
+    godot
 
     # File Utilities
     nautilus
@@ -169,6 +182,7 @@
     # Music
     gnome-music
     localsearch
+    gnome-podcasts
 
     # Videos
     mpv
@@ -192,7 +206,7 @@
     ".config/doom/config.el".source = dotfiles/doom/config.el;
     ".config/doom/init.el".source = dotfiles/doom/init.el;
     ".config/doom/packages.el".source = dotfiles/doom/packages.el;
-    ".config/foot/foot.ini".source = dotfiles/foot/foot.ini;
+    ".config/foot/foot.ini".source = config.lib.file.mkOutOfStoreSymlink "/etc/nixos/home/dotfiles/foot/foot.ini";
     #".config/mako/config".source = dotfiles/.config/mako/config;
     ".config/sway/config".source = dotfiles/sway/config;
     ".config/sway/config.d/swaysome.conf".source = dotfiles/sway/config.d/swaysome.conf;
@@ -200,6 +214,7 @@
     #".config/sway/backgrounds/normal.png".source = dotfiles/sway/backgrounds/normal.png;
     #".config/sway/backgrounds/city.png".source = dotfiles/sway/backgrounds/city.png;
     #".config/sway/backgrounds/lockscreen.png".source = dotfiles/sway/backgrounds/lockscreen.png;
+    ".config/niri/config.kdl".source = dotfiles/niri/config.kdl;
     ".config/waybar/config".source = dotfiles/waybar/config;
     ".config/waybar/style.css".source = dotfiles/waybar/style.css;
 
@@ -247,6 +262,7 @@
       gpu-context = "wayland";
     };
   };
+  programs.obs-studio.enable = true;
   programs.nnn = {
     enable = true;
     plugins = {
@@ -256,12 +272,34 @@
     };
   };
 
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium;
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        jdinhlife.gruvbox
+        asvetliakov.vscode-neovim
+      ];
+    };
+  };
+
   # Allow home-manager to manage shell
   programs.bash = {
     enable = false;
     initExtra = "set -o vi
     trap 'echo -ne \"\\033]0;\${PWD}: (\${BASH_COMMAND})\\007\"' DEBUG";
   };
+
+  #services = {
+  #  fluidsynth = {
+  #    enable = true;
+  #    extraOptions = [
+  #      "--gain 1.0"
+  #    ];
+  #    soundFont = "${config.home.homeDirectory}/Games/soundfonts/GeneralUser-GS.sf2";
+  #    soundService = "pipewire-pulse";
+  #  };
+  #};
 
 
   home.sessionVariables = {
