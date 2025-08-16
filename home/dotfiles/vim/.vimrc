@@ -4,7 +4,7 @@ set nocompatible
 filetype off
 
 " ---- Plugins -------------------------------------------
-call plug#begin()
+call plug#begin('~/.vim/plugged')
 " ---- General Plugins -----------------------------------
 "Plug 'morhetz/gruvbox'
 Plug 'lifepillar/gruvbox8'
@@ -29,10 +29,13 @@ Plug 'junegunn/vim-easy-align'
 Plug 'puremourning/vimspector'
 Plug 'tpope/vim-surround'
 "Plug 'Raimondi/delimitMate'
-Plug 'yms9654/HTML-AutoCloseTag', { 'commit': '9e5acea749bde5818ba5782270ed7fda79dd03c3', 'for': ['html', 'javascript']}
+" Plug 'yms9654/HTML-AutoCloseTag', { 'commit': '9e5acea749bde5818ba5782270ed7fda79dd03c3', 'for': ['html', 'javascript']}
+Plug 'ap/vim-css-color'
+Plug 'chrisbra/Colorizer'
 Plug 'kovisoft/slimv', { 'for': [ 'scheme', 'cl', 'lisp', 'clojure' ] }
 "Plug 'jpalardy/vim-slime'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'turbio/bracey.vim'
 
 " ---- Git -------------------------------
 Plug 'airblade/vim-gitgutter'
@@ -58,7 +61,6 @@ filetype plugin indent on
 
 " see man pages in new buffer
 runtime! ftplugin/man.vim
-
 
 " ---- General settings --------------------------------
 set backspace=indent,eol,start
@@ -287,7 +289,9 @@ let g:lightline = {
 " endfunction
 
 " ---- yegappan/lsp settings ----
-let lspOpts = #{autoHighlightDiags: v:true}
+" set omnifunc=syntaxcomplete#Complete
+inoremap <C-Space> <C-X><C-O><C-N>
+let lspOpts = #{autoHighlightDiags: v:true, omniComplete: v:true}
 autocmd User LspSetup call LspOptionsSet(lspOpts)
 
 let lspServers = [#{
@@ -334,7 +338,25 @@ let lspServers = [#{
       \     }
       \   },
       \   args: ['--stdio'],
-      \	}]
+      \	},
+      \]
+      " #{name: 'vscode-html-server',
+      "   filetype: ['html'],
+      "   path: $HOME.'/.nix-profile/bin/vscode-html-language-server',
+      "   args: ['--stdio'],
+      " }, #{name: 'vscode-css-server',
+      "   filetype: 'css',
+      "   path: $HOME.'/.nix-profile/bin/vscode-css-language-server',
+      "   args: ['--stdio'],
+      " }, #{name: 'vscode-eslint-server',
+      "   filetype: ['javascript'],
+      "   path: $HOME.'/.nix-profile/bin/vscode-eslint-language-server',
+      "   args: ['--stdio'],
+      " }, #{name: 'vscode-markdown-server',
+      "   filetype: ['markdown'],
+      "   path: $HOME.'/.nix-profile/bin/vscode-markdown-language-server',
+      "   args: ['--stdio'],
+      " }
 autocmd User LspSetup call LspAddServer(lspServers)
 
 nmap <Leader>l :LspDiagShow<CR>
@@ -351,8 +373,9 @@ nnoremap <Leader>k <Leader>K
 let g:vimcomplete_tab_enable = 1
 
 let vimcompleteOptions = #{
-      \  lsp: #{ priority: 20 }
+      \  lsp: #{ enable: 1, priority: 20 },
       \}
+      "\  omnifunc: #{ enable: 1, priority: 21, filetypes: ['html', 'css'] }
 
 autocmd VimEnter * call g:VimCompleteOptionsSet(vimcompleteOptions)
 "autocmd VimEnter * VimCompleteEnable c cpp cs python java javascript nix vim lua
